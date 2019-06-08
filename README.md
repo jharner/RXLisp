@@ -1,6 +1,8 @@
 # RXLisp
 An XLisp-Stat package for R
 
+This is based on original work done by Duncan Temple Lang
+
 This is an approach to creating an embedded version of XLisp-Stat
 which can be dynamically loaded into other applications.
 Specifically, we create an interface between R and XLisp
