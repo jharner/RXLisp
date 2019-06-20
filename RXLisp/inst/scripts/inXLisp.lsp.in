@@ -1,0 +1,5 @@
+(use-package "SHLIB")
+
+(shared-library-information "@R_PACKAGE_DIR@/libs/RinXLisp.so" "Rmodule")
+
+(load-shared-library "@R_PACKAGE_DIR@/libs/RinXLisp.so" "Rmodule")

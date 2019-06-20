@@ -1,0 +1,51 @@
+AC_INIT(src/RXLisp.c)
+
+AC_ARG_WITH(xlisp, [--with-xlisp=<dir>	identifies the directory containing the XLisp-Stat source directory, used for finding header files and also to build the XLisp shared library], XLISP_SRC_DIR=${with_val})
+
+AC_ARG_WITH(build-dll, [--with-build-xlisp-dll=  controls whether we attempt to install the patches for and build the XLisp shared library. Specify yes or no. This is only needed once.], BUILD_XLISP_DLL=${with_val})
+
+if test -z "${XLISPLIB}" ; then
+ for f in /usr/local/lib /usr/lib ; do 
+  if test -f $f/xlispstat/xlisp.wks ; then
+    XLISPLIB=$f/xlispstat
+    echo " *** Assuming XLisp installation is located in $XLISPLIB"
+  fi
+ done
+ if test -z "${XLISPLIB}" ; then 
+   echo "Please specify the location of the XLisp installation, i.e. where xlisp.wks is located"
+   echo "Set the environment variable XLISPLIB."
+   exit 1
+ fi
+fi
+
+AC_SUBST(XLISPLIB)
+
+if test -z "${XLISP_SRC_DIR}" ; then
+ echo "You must specify the xlisp source directory"
+ echo "by specifying a value for the environment variable"
+ echo "XLISP_SRC_DIR or using the --with-xlisp flag"
+ exit 1
+fi
+
+export XLISP_SRC_DIR
+
+if test "${BUILD_XLISP_DLL}" = "yes" ; then
+  echo "Installing XLisp patches and building libxlisp.so"
+  (cd xlisp ; ./install)
+fi
+
+AC_SUBST(XLISP_SRC_DIR)
+
+
+if test -z "${R_HOME}" ; then
+ AC_PATH_PROG(R, R)
+ R_HOME=`${R} RHOME`
+fi
+
+# Export the LD_PATH for the Bash and Csh scripts.
+LD_PATH=${R_HOME}/bin:${XLISP_SRC_DIR}:${R_PACKAGE_DIR}/libs
+
+AC_SUBST(LD_PATH)
+AC_SUBST(R_PACKAGE_DIR)
+
+AC_OUTPUT(src/Makevars R/XLispConfig.S cleanup inst/scripts/RXLisp.bsh inst/scripts/RXLisp.csh inst/scripts/inXLisp.lsp)

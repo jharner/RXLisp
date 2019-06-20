@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if test -z "${XLISP_SRC_DIR}" ; then
+  echo "You must specify the location of the XLisp-Stat source"
+  echo "Set the environment variable XLISP_SRC_DIR"
+  exit 1
+fi
+
+if test ! -d ${XLISP_SRC_DIR} ; then
+  echo "The XLisp-Stat source must be a directory. Set XLISP_SRC_DIR correctly."
+  exit 1
+fi
+
+cp Makefile.in xldmem.h xlisp.c ${XLISP_SRC_DIR}
+
+cd ${XLISP_SRC_DIR}
+./configure "$@"
+make libxlisp.so

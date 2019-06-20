@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1></h1>
+
+<dl>
+  <dt> When I ask for the names of the available variables
+      in XLisp using
+      <pre>
+.XLisp("variables")
+      </pre>
+      I expect the result to be  a character vector.
+      Instead, it is a list of R values of class XLispSymbol objects.
+      What's this about?
+  <dd>
+      The value of the XLisp function <code>variables</code>
+      is a "list" of XLisp symbol values.
+      These are converted to an R list, with each element
+      converted to an string with the class XLispSymbol
+      tagged onto it to indicate that it is a symbol and not
+      a simple string.
+</dl>
+
+
+<hr>
+<address><a href="http://cm.bell-labs.com/stat/duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@research.bell-labs.com>&lt;duncan@research.bell-labs.com&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Wed Aug 28 16:08:35 EDT 2002
+<!-- hhmts end -->
+</body> </html>

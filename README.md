@@ -13,6 +13,20 @@ changes to XLisp for other platforms.  Similarly, event loop
 integration will be needed for the different platforms. Fortunately, I
 am currently investigating a general framework for this for R.
 
+--- Added by Jun Tan
+
+A version of xlisp with added option to be built as a shared library is
+included here under xlisp folder.
+
+Once libxlisp.so is built, copy it to appropriate directory and/or set
+environment variable LD_LIBRARY_PATH so that it can be found by dynamic
+loader.
+
+Then install RXLisp by running command: R CMD INSTALL RXLisp
+(This step is not verified yet as there were compilation errors
+
+--- End
+
 To install this software, you will need to apply the necessary changes to
 XLisp-Stat and build that as a shared library. The new files are located
 in the xlisp/ directory. There is a script in the xlisp/ directory
@@ -48,4 +62,3 @@ installing libxlisp.so in a directory the system searches and
 re-running /sbin/ldconfig to rebuild the cache of available shared
 libraries. Alternatively, one can include the directory containing the
 shared library in the LD_LIBRARY_PATH environment variable.
-

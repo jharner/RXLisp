@@ -1,0 +1,6 @@
+R_PACKAGE_DIR=/home/jtan/Apps/RLibrary/RXLisp
+
+cp src/libConverters.${SHLIB_EXT} $R_PACKAGE_DIR/libs
+cp src/RinXLisp.${SHLIB_EXT} $R_PACKAGE_DIR/libs
+
+
