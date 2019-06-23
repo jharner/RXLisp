@@ -1,1 +1,4 @@
+useDynLib(libRXLispConverters)
+useDynLib(RXLisp, RXLisp_init)
 exportPattern(".")
+
