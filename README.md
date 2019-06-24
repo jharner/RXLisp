@@ -18,6 +18,11 @@ am currently investigating a general framework for this for R.
 A version of xlisp with added option to be built as a shared library is
 included here under xlisp folder.
 
+To build libxlisp.so:
+1. change directory to xlisp
+2. run command ./configure
+3. run command make libxlisp.so
+
 Once libxlisp.so is built, copy it to appropriate directory and/or set
 environment variable LD_LIBRARY_PATH so that it can be found by dynamic
 loader.
