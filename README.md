@@ -67,3 +67,25 @@ installing libxlisp.so in a directory the system searches and
 re-running /sbin/ldconfig to rebuild the cache of available shared
 libraries. Alternatively, one can include the directory containing the
 shared library in the LD_LIBRARY_PATH environment variable.
+
+
+Steps for building RXLisp
+1. Build shared library for xlisp
+   a. I have copied xlisp source code and the update into xlisp directory.
+   b. Change directory to xlisp: cd xlisp
+   c. Run configuration script: ./configure
+   d. Build xlisp shared library: make libxlisp.so
+   e. Copy the libxlisp.so file to appropriate location. (I haven't figure out
+   this yet. I tried /usr/local/lib. It seems not working although ldconfig
+   it show up in ldconfig cache.)
+2. Install RXLisp library
+   a. Go back to project base
+   b. Install RXLisp: R CMD INSTALL RXLisp <-l path-to-local-r-library-folder>
+   The -l part is optional. Use that when you want to install the package in
+   a location different to the standard one.
+
+
+------ Options for communication between R processes
+1. Share information through file system.
+2. For unix, pipe/message queue/shared memory.
+3. Network connection. Processes don't have to be on the same machine.
