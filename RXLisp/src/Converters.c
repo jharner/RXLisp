@@ -55,8 +55,7 @@ convertToXLisp(USER_OBJECT_ robj)
   } else if(TYPEOF(robj) == VECSXP) {
     return(convertRList(robj));
   } else if(TYPEOF(robj) == CLOSXP) {
-    PROBLEM "Cannot currently convert R functions to XLisp-Stat"
-    WARN;
+    Rf_warning("Cannot currently convert R functions to XLisp-Stat");
     return(NIL);
   }
 
@@ -115,9 +114,8 @@ convertToXLisp(USER_OBJECT_ robj)
     }
       break;
     default:
-      PROBLEM "Converter to XLisp not implemented yet for %d", 
-	    TYPEOF(robj)
-      ERROR;
+      Rf_error("Converter to XLisp not implemented yet for %d", 
+	       TYPEOF(robj));
     }
   }
   return(ans);
@@ -156,7 +154,7 @@ convertToR(LVAL xobj)
         char buf[2] = "a";
 	PROTECT(ans = NEW_CHARACTER(1));
 	buf[0] = getchcode(xobj);
-	SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(buf));
+	SET_STRING_ELT(ans, 0, Rf_mkChar(buf));
         UNPROTECT(1);
        }
 	break;
@@ -164,7 +162,7 @@ convertToR(LVAL xobj)
 
      case STRING:
 	PROTECT(ans = NEW_CHARACTER(1));
-	SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(getstring(xobj)));
+	SET_STRING_ELT(ans, 0, Rf_mkChar(getstring(xobj)));
         UNPROTECT(1);
 	break;
      case CONS:
@@ -220,15 +218,14 @@ convertToR(LVAL xobj)
         USER_OBJECT_ tmp;
         PROTECT(ans = convertToR(getpname(xobj)));
 	PROTECT(tmp = NEW_CHARACTER(1));
-        SET_STRING_ELT(tmp, 0, COPY_TO_USER_STRING("XLispSymbol"));
+        SET_STRING_ELT(tmp, 0, Rf_mkChar("XLispSymbol"));
 	SET_CLASS(ans, tmp);
 	UNPROTECT(2);
      }
        break;
      default:
-        PROBLEM "Converter to R not implemented yet for %d", 
-	    ntype(xobj)
-        WARN;
+       Rf_warning("Converter to R not implemented yet for %d", 
+		  ntype(xobj));
    }
 
    return(ans);
@@ -310,15 +307,15 @@ makeXLispReference(LVAL xobj, const char * const className)
   SET_VECTOR_ELT(ans, 1, R_MakeExternalPtr((void *) xobj, XLispObjectReferenceClass, NULL_USER_OBJECT));
 
   PROTECT(names = NEW_CHARACTER(2));
-  SET_STRING_ELT(names, 0, COPY_TO_USER_STRING("id"));
-  SET_STRING_ELT(names, 1, COPY_TO_USER_STRING("address"));
+  SET_STRING_ELT(names, 0, Rf_mkChar("id"));
+  SET_STRING_ELT(names, 1, Rf_mkChar("address"));
   SET_NAMES(ans, names);
 
   PROTECT(names = NEW_CHARACTER(className ? 2 : 1));
   pos = 0;
   if(className)
-    SET_STRING_ELT(names, pos++, COPY_TO_USER_STRING(className));  
-  SET_STRING_ELT(names, pos++, COPY_TO_USER_STRING("XLispReference"));  
+    SET_STRING_ELT(names, pos++, Rf_mkChar(className));  
+  SET_STRING_ELT(names, pos++, Rf_mkChar("XLispReference"));  
   SET_CLASS(ans, names);
 
   UNPROTECT(3);

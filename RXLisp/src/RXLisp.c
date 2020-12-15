@@ -42,8 +42,7 @@ RXLisp_init(USER_OBJECT_ args, USER_OBJECT_ registerEvent)
       /* Initialize only once and then set the flag to say it has been done.  */
    argv = (char **) malloc(sizeof(char *) * n);
    if(!argv) {
-     PROBLEM  "cannot allocate space for XLisp initialization command line arguments"
-     ERROR;
+     Rf_error("cannot allocate space for XLisp initialization command line arguments");
    }
 
     /* Copy the command line arguments so that they persist after the call is made. */
@@ -86,8 +85,7 @@ RXLisp_call(USER_OBJECT_ funName, USER_OBJECT_ args, USER_OBJECT_ convert, USER_
   nargs = GET_LENGTH(args);
   xlbegin(&ctxt, CF_TOPLEVEL | CF_CLEANUP | CF_BRKLEVEL | CF_ERROR, (LVAL)1);
   if(XL_SETJMP(ctxt.c_jmpbuf)) {
-     PROBLEM "Error in XLisp computation"
-     ERROR;
+    Rf_error("Error in XLisp computation");
   }
 
   sym = xlenter(CHAR_DEREF(STRING_ELT(funName, 0)));
@@ -98,9 +96,8 @@ RXLisp_call(USER_OBJECT_ funName, USER_OBJECT_ args, USER_OBJECT_ convert, USER_
 
   if(symbolp(sym) && !boundp(sym)) {
    xlpop();
-   PROBLEM "No XLisp function by name %s",
-	   CHAR_DEREF(STRING_ELT(funName, 0))
-   ERROR;
+   Rf_error("No XLisp function by name %s",
+	    CHAR_DEREF(STRING_ELT(funName, 0)));
   }
 
   newfp = oldsp = xlsp;

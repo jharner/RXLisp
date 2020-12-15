@@ -5,7 +5,6 @@
 #ifdef __cplusplus 
 extern "C" {
 #endif
-
   #if defined(_S_)
   /* || defined(_R_) */
 
@@ -46,6 +45,7 @@ extern "C" {
 
 
   #if defined(_R_)
+  #include <R.h>
   #include <Rinternals.h>
   #include <Rdefines.h>
   #ifdef length

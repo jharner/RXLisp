@@ -1,10 +1,11 @@
-XLISP_SRC_DIR=/home/jtan/Projects/xlisp
+XLISP_SRC_DIR=/home/jtan/Projects/RXLisp/xlisp
 
 INCLUDES=$(OMEGA_HOME)/include/Corba $(XLISP_SRC_DIR)  $(R_HOME)/include 
 
-DEFINES=-D_R_=1 -DX11WINDOWS=1
+DEFINES=-D_R_=1 -DX11WINDOWS=1 -DR_NO_REMAP
 
 
-CONVERTER_LIB=RXLispConverters
+#CONVERTER_LIB=RXLispConverters
 PKG_CPPFLAGS=-g -Wall $(INCLUDES:%=-I%) $(DEFINES)
 #PKG_LIBS=-l$(CONVERTER_LIB) -L${XLISP_SRC_DIR} -lxlisp
+PKG_LIBS=-L${XLISP_SRC_DIR} -lxlisp

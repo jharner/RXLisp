@@ -1,4 +1,6 @@
-useDynLib(libRXLispConverters)
-useDynLib(RXLisp, RXLisp_init)
-exportPattern(".")
+export(.XLisp)
+export(.XLispInit)
+export(parseEval)
+
+useDynLib(RXLisp)
 

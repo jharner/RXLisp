@@ -1,5 +1,0 @@
-if test -z "${LD_LIBRARY_PATH}" ; then
- LD_LIBRARY_PATH=/usr/lib/R/bin:/home/jtan/Projects/xlisp:/home/jtan/Apps/RLibrary/RXLisp/libs
-else
- LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/R/bin:/home/jtan/Projects/xlisp:/home/jtan/Apps/RLibrary/RXLisp/libs
-fi

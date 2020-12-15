@@ -47,7 +47,7 @@
 \examples{
  h <- .XLisp("histogram", rnorm(100))
  h[["title"]]
- h$close()
+ .XLisp("SEND", h, ":close")
 }
 \keyword{interface}
 

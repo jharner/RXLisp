@@ -3,7 +3,7 @@ Version: 0.3
 Date:    2002/09/01
 Title: Interface between R and XLisp.
 Author:  Duncan Temple Lang <duncan@research.bell-labs.com>
-Depends: R (>= 1.5.0)
+Depends: R (>= 4.0.0)
 Maintainer: Duncan Temple Lang <duncan@research.bell-labs.com>
 Description: This provides an interface to call XLisp-Stat
       functions from within R, inspired by Forrest Young's remarks
