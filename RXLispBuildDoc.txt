@@ -1,0 +1,78 @@
+This document descrips how to buid RXLisp and install RXLisp on R 4.0+
+
+1. Change log
+- RXLisp/DESCRIPTION
+  Changed depands R verion from 1.5.0 to 4.0.0.
+  There has been a lot of change since 1.5.0. Bump up the required R version
+  to 4.0.0 make it easier since we only need focus on recent versions of R.
+  
+- RXLisp/NAMESAPCE file.
+  The NAMESPACE file was not requiried for packages for older version of R. I added the file. But the content was not correct.
+
+- RXLisp/cleanup
+  RXLisp/config.status
+  RXList/inst/RXLisp.bsh
+  RXList/inst/RXLisp.csh
+  RXList/inst/inXLisp.lsp
+  Removed. These files are generated during the building process. They do not need to be in the repo.
+  
+- RXLisp/main/XLispReference.Rd
+  The command is not working. Replaced with sending close call XLisp. Maybe there is a better way to do this?
+
+- RXLisp/src/Converters.c
+  RXLisp/src/RXLisp.c
+  Changed some macros to directly function call. I haven't worked on C for a long time. Not sure why those macros is not working.
+
+- RXLisp/src/RSCommon.h
+  Added include to R.h
+
+- RXLisp/src/Makefile
+  RXLisp/src/Makevars
+  RXLisp/src/Makevars.in
+  The original setting creats 3 dynamic libraries:
+  1. Calling R from xlisp;
+  2. Calling xlisp from R;
+  3. Common library used by both.
+
+ However, the main focus here is to call xlisp from R. I had trouble in adding the common library into the R package. So I changed the setting to only build one library that support calling xlisp from R.
+
+- I also deleted a few files in xlisp directory because they are generated during the configuration/building process.
+
+
+2. Instruction on building RXLisp
+
+A. First, R 4.0+ version need to be installed. I downloaded and compiled the latest development version "4.1.0".
+
+B. Although there is a option to compile xlisp-stat together with RXLisp. I choose build and install it separately:
+change directory to xlisp directory and run the following commands:
+
+./configure
+make
+make install (Need root privilege if install to /usr/local)
+
+xlisp stat will be installed to /usr/local. After the installation, run the following command to make sure libxlisp.so can be found:
+
+ldconfig -v | grep xlisp
+
+If not, copy libxlisp.so file to /usr/local/lib folder.
+
+C. Set environment variables:
+
+export XLISPLIB=/usr/local/xlisp/lib/xlispstat
+export XLISP_SRC_DIR=/home/jtan/Projects/RXLisp/xlisp
+
+D. Change directory to the top level of the project. Run the command:
+
+R CMD check RXLisp
+
+If everything went well, there should be no errors. If that's the case, move on to next step.
+
+E. Build the package:
+
+R CMD build RXLisp
+
+F. Run command to install the package
+
+R CMD INSTALL RXLisp_0.3.tar.gz
+
+G. Last run R and load the library to test.

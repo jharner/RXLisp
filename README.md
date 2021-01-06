@@ -13,6 +13,20 @@ changes to XLisp for other platforms.  Similarly, event loop
 integration will be needed for the different platforms. Fortunately, I
 am currently investigating a general framework for this for R.
 
+--- Added by Jim Harner
+
+To build and run the Docker image:
+
+1. To build the docker image:
+
+cd <RXLisp root folder>
+docker build -t rxlisp .
+
+2. To run the image:
+
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix rxlisp
+
+
 --- Added by Jun Tan
 
 A version of xlisp with added option to be built as a shared library is
